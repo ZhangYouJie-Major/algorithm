@@ -1,9 +1,6 @@
 package com.zhangyoujie;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -124,4 +121,62 @@ public class July_1st {
         return new int[]{};
 
     }
+
+    /**
+     * 删除链表的倒数第 N 个结点
+     *
+     * @param head 头结点
+     * @param n    倒数第n个
+     * @return 头结点
+     * <p>
+     * 通过快慢指针来解决 时间复杂度O(n) 空间复杂度O(1)
+     * 1.快指针先走n步
+     * 2.快慢指针同时走，当快指针走到尾部时，慢指针刚好走到倒数第n个节点
+     * 3.删除倒数第n个节点
+     */
+
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (n > 0) {
+            fast = fast.next;
+            n--;
+        }
+        if (fast == null) {
+            return head.next;
+        }
+
+        while (fast.next != null && slow.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+
+        }
+        if (slow.next != null) {
+            slow.next = slow.next.next;
+        } else {
+            head = head.next;
+        }
+        return head;
+
+    }
+
+
+    public class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
 }
