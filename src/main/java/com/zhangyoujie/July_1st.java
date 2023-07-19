@@ -1,6 +1,7 @@
 package com.zhangyoujie;
 
 import java.util.*;
+import java.util.zip.Inflater;
 
 /**
  * @author zhangyoujie
@@ -188,6 +189,243 @@ public class July_1st {
 
         return dp[m - 1][n - 1];
     }
+
+    public static int longestAlternatingSubarray(int[] nums, int threshold) {
+        int left = 0;
+        int right = nums.length - 1;
+
+        int max = 0;
+
+        while (left <= right) {
+            if (nums[right] > threshold) {
+                right--;
+                continue;
+            }
+            if (nums[left] % 2 != 0) {
+                left++;
+                continue;
+            }
+
+            boolean flag = true;
+            boolean flag1 = true;
+
+            for (int i = left; i < right; i++) {
+                if (nums[i] > threshold) {
+                    if (Math.abs(i - left) > Math.abs(i - right)) {
+                        right = i - 1;
+                    } else {
+                        left = i + 1;
+                    }
+                    flag1 = false;
+                    break;
+                }
+            }
+
+            for (int i = left; i < right; i++) {
+                if (nums[i] % 2 == nums[i + 1] % 2) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (!flag1) {
+                continue;
+            }
+            if (flag) {
+                max = Math.max(max, right - left + 1);
+            }
+            left++;
+
+        }
+
+        return max;
+    }
+
+
+    public static void main(String[] args) {
+        int i = minSubArrayLen(11, new int[]{1, 2, 3, 4, 5});
+        System.out.println(i);
+    }
+
+    public static int minSubArrayLen(int target, int[] nums) {
+
+        int length = nums.length;
+        if (length == 0) {
+            return 0;
+        }
+
+        int[] sum = new int[length + 1];
+        int ans = Integer.MAX_VALUE;
+        sum[0] = 0;
+        for (int i = 1; i <= length; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+
+        Arrays.sort(nums);
+
+        //sum[j] -sum[i] > = target -->sum[j]  > =sum[i]+target
+        for (int i = 1; i <= length; i++) {
+            int s = sum[i - 1] + target;
+
+            //  Arrays.binarySearch 寻找下标 当没找到是 返回-index 则顺序在 index-1之后
+            int index = Arrays.binarySearch(sum, s);
+            if (index < 0) {
+                index = -index - 1;
+            }
+            if (index <= length) {
+                ans = Math.min(ans, index - (i - 1));
+            }
+
+        }
+        return ans == Integer.MAX_VALUE ? 0 : ans;
+
+    }
+
+    public static int findMiddleIndex(int[] nums) {
+
+        int total = Arrays.stream(nums).sum();
+
+        int tolalLeft = 0;
+
+        for (int i = 0; i < nums.length; i++) {
+            if (tolalLeft * 2 == total - nums[i]) {
+                return i;
+            }
+            tolalLeft += nums[i];
+        }
+
+        return -1;
+
+    }
+
+    public int searchInsert(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] > target) {
+                right = mid - 1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+
+        return left;
+    }
+
+//    public static int[][] merge(int[][] intervals) {
+//
+//        int[][] res = new int[intervals.length][intervals[0].length];
+//
+//        Map<Integer, Integer> map = new HashMap<>();
+//        for (int i = 0; i < intervals.length; i++) {
+//            map.put(intervals[i][0], intervals[i][1]);
+//        }
+//        int[][] temp = new int[intervals.length][intervals[0].length];
+//        int index = 0;
+//        for (Map.Entry<Integer, Integer> integerIntegerEntry : map.entrySet()) {
+//            temp[index][0] = integerIntegerEntry.getKey();
+//            temp[index][1] = integerIntegerEntry.getValue();
+//            index++;
+//        }
+//
+//
+//        for (int i = 0; i < temp.length; i++) {
+//            int left = temp[i][0];
+//            int right = temp[i][1];
+//            if (temp[i + 1][0] < right && temp[i + 1][1] < right) {
+//                continue;
+//            } else if ()
+//
+//
+//        }
+//
+//
+//        return new int[][]{};
+//
+//    }
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+
+        Set<String> set = new HashSet<>();
+        List<List<Integer>> res = new ArrayList<>();
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] > 0) {
+                continue;
+            }
+
+            //中间指针
+            int mid = i + 1;
+
+            int right = nums.length - 1;
+
+            while (mid < right) {
+
+                while (mid < right && nums[mid] + nums[right] + nums[i] > 0) {
+                    right--;
+                }
+                if (mid == right) {
+                    break;
+                }
+                if (nums[mid] + nums[right] + nums[i] == 0) {
+
+                    String key = new StringBuffer().append(nums[i]).append(nums[mid]).append(nums[right]).toString();
+                    if (!set.contains(key)) {
+                        List<Integer> list = new ArrayList<>();
+                        list.add(nums[mid]);
+                        list.add(nums[right]);
+                        list.add(nums[i]);
+
+                        res.add(list);
+                        set.add(key);
+                    }
+
+
+                }
+                mid++;
+            }
+
+        }
+
+        return res;
+
+    }
+
+//    public int minFallingPathSum(int[][] matrix) {
+//
+//    }
+
+
+    public static int alternateDigitSum(int n) {
+
+        int sum = 0;
+        Deque<Integer> digits = new ArrayDeque<>();
+        while (n > 0) {
+            digits.addLast(n % 10);
+            n /= 10;
+        }
+
+        int index = 0;
+        while (!digits.isEmpty()) {
+            if (index % 2 == 0) {
+                sum += digits.pollLast();
+            } else {
+                sum -= digits.pollLast();
+            }
+            index++;
+
+        }
+        return sum;
+
+    }
+
+//    public static long maxAlternatingSum(int[] nums) {
+//
+//
+//
+//    }
 
 
     public class ListNode {
