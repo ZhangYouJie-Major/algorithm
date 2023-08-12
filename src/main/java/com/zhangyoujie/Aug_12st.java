@@ -1,6 +1,8 @@
 package com.zhangyoujie;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 /**
@@ -55,6 +57,47 @@ public class Aug_12st {
         }
         return head.next;
 
+    }
+
+    public static void main(String[] args) {
+        int[] ints = topKFrequent(new int[]{1, 1, 1, 2, 2, 3}, 2);
+        for (int i = 0; i < ints.length; i++) {
+            System.out.println(ints[i]);
+        }
+    }
+
+    public static int[] topKFrequent(int[] nums, int k) {
+        PriorityQueue<String> queue = new PriorityQueue<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                Integer count1 = Integer.parseInt(o1.split("_")[1]);
+                Integer count2 = Integer.parseInt(o2.split("_")[1]);
+                return count2 - count1;
+            }
+        });
+        int length = nums.length;
+        Map<Integer, Integer> map = new HashMap<>();
+
+
+        int[] ans = new int[k];
+        for (int i = 0; i < length; i++) {
+            if (map.containsKey(nums[i])) {
+                map.put(nums[i], map.get(nums[i]) + 1);
+            } else {
+                map.put(nums[i], 1);
+            }
+        }
+        map.forEach((key, value) -> {
+            //元素_次数
+            queue.offer(key + "_" + value);
+
+        });
+        for (int i = 0; i < k; i++) {
+            if (!queue.isEmpty()) {
+                ans[i] = Integer.parseInt(queue.poll().split("_")[0]);
+            }
+        }
+        return ans;
     }
 
     public int findKthLargest(int[] nums, int k) {
