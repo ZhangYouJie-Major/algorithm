@@ -1,5 +1,6 @@
 package com.zhangyoujie;
 
+import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
@@ -34,27 +35,44 @@ public class Aug_12st {
         return header.next;
     }
 
-//    public ListNode mergeKLists(ListNode[] lists) {
-//        //使用优先队列 优先队列默认是小顶堆 反转比较器 变成大顶堆
-//        PriorityQueue<ListNode> queue = new PriorityQueue<>((v1, v2) -> v1.val - v2.val);
-//        for (ListNode list : lists) {
-//            if (null != list) {
-//                queue.offer(list);
-//            }
-//        }
-//        ListNode head = new ListNode();
-//        ListNode tail = head;
-//        while (!queue.isEmpty()) {
-//            ListNode midNode = queue.peek();
-//            tail.next = midNode;
-//            tail = tail.next;
-//            if (null != midNode.next) {
-//                queue.offer(midNode.next);
-//            }
-//        }
-//        return head.next;
-//
-//    }
+    public ListNode mergeKLists(ListNode[] lists) {
+        //使用优先队列 优先队列默认是小顶堆 反转比较器 变成大顶堆
+        PriorityQueue<ListNode> queue = new PriorityQueue<>((v1, v2) -> v1.val - v2.val);
+        for (ListNode list : lists) {
+            if (null != list) {
+                queue.offer(list);
+            }
+        }
+        ListNode head = new ListNode();
+        ListNode tail = head;
+        while (!queue.isEmpty()) {
+            ListNode midNode = queue.peek();
+            tail.next = midNode;
+            tail = tail.next;
+            if (null != midNode.next) {
+                queue.offer(midNode.next);
+            }
+        }
+        return head.next;
+
+    }
+
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.reverseOrder());
+        int length = nums.length;
+        for (int i = 0; i < length; i++) {
+            queue.offer(nums[i]);
+        }
+        for (int i = 1; i <= k; i++) {
+            if (i == k && !queue.isEmpty()) {
+                return queue.poll();
+            }
+            queue.poll();
+        }
+        return 0;
+
+
+    }
 
     public class ListNode {
         int val;
