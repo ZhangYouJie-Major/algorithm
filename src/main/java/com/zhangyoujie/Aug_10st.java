@@ -1,5 +1,6 @@
 package com.zhangyoujie;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 /**
@@ -7,10 +8,6 @@ import java.util.Arrays;
  * @date 2023/8/10
  */
 public class Aug_10st {
-
-    public static void main(String[] args) {
-        System.out.println(maximumBags(new int[]{10, 2, 2}, new int[]{2, 2, 0}, 100));
-    }
 
     /**
      * 排序加贪心
