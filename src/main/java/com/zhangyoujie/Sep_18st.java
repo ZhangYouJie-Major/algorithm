@@ -22,6 +22,7 @@ public class Sep_18st {
         sumMap.put(0, 1);
         for (int i = 0; i < length; i++) {
             sum += nums[i];
+            //因为负数取模的时候会出现负数 所以要取模之后再加k 再取模
             int mod = (sum % k + k) % k;
             Integer count = sumMap.getOrDefault(mod, 0);
             ans += count;
