@@ -1,5 +1,7 @@
 package com.zhangyoujie;
 
+import sun.awt.geom.AreaOp;
+
 import java.util.*;
 
 /**
@@ -9,9 +11,47 @@ import java.util.*;
 public class Sep_18st {
 
     public static void main(String[] args) {
-        System.out.println(subarraysDivByK(new int[]{-1, 2, 9}, 2));
+
+        System.out.println(distMoney(16, 3));
+
     }
 
+    /**
+     * 2591. 将钱分给最多的儿童
+     * 贪心算法 优先分给最多的人
+     *
+     * @param money    钱
+     * @param children 儿童
+     * @return 最多分给多少个人
+     */
+    public static int distMoney(int money, int children) {
+        if (children > money) {
+            return -1;
+        }
+
+        money -= children;
+        int cnt = Math.min(money / 7, children);
+        money -= cnt * 7;
+        children -= cnt;
+        //如果每个人都分到了 但是还是有剩余的钱 或者 恰好剩余了一个人 但是剩下了3美元  都减去1
+        if ((children == 0 && money > 0) || (children > 0 && money == 3)) {
+            cnt--;
+        }
+        return cnt;
+    }
+
+    public static int giveGem(int[] gem, int[][] operations) {
+        int length = operations.length;
+        for (int i = 0; i < length; i++) {
+            int fromIndex = operations[i][0];
+            int toIndex = operations[i][1];
+            int temp = gem[fromIndex] / 2;
+            gem[fromIndex] -= temp;
+            gem[toIndex] += temp;
+        }
+        Arrays.sort(gem);
+        return gem[gem.length - 1] - gem[0];
+    }
 
     public static int subarraysDivByK(int[] nums, int k) {
         int length = nums.length;
