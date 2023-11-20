@@ -23,24 +23,24 @@ public class ListNode_Test {
         ListNode listNode2 = new ListNode(2);
         ListNode listNode3 = new ListNode(3);
         ListNode listNode4 = new ListNode(4);
-        ListNode listNode5 = new ListNode(2);
-        ListNode listNode6 = new ListNode(5);
-        ListNode listNode7 = new ListNode(5);
-        ListNode listNode8 = new ListNode(9);
-        ListNode listNode9 = new ListNode(9);
-        ListNode listNode10 = new ListNode(9);
+        ListNode listNode5 = new ListNode(5);
+//        ListNode listNode6 = new ListNode(5);
+//        ListNode listNode7 = new ListNode(5);
+//        ListNode listNode8 = new ListNode(9);
+//        ListNode listNode9 = new ListNode(9);
+//        ListNode listNode10 = new ListNode(9);
         listNode1.next = listNode2;
         listNode2.next = listNode3;
         listNode3.next = listNode4;
         listNode4.next = listNode5;
-        listNode5.next = listNode6;
-        listNode6.next = listNode7;
-        listNode7.next = listNode8;
-        listNode8.next = listNode9;
-        listNode9.next = listNode10;
+//        listNode5.next = listNode6;
+//        listNode6.next = listNode7;
+//        listNode7.next = listNode8;
+//        listNode8.next = listNode9;
+//        listNode9.next = listNode10;
 
 
-        ListNode listNode = revert1(listNode1);
+        ListNode listNode = removeNthFromEnd(listNode1, 2);
         while (null != listNode) {
             System.out.println(listNode.val);
             listNode = listNode.next;
@@ -89,21 +89,19 @@ public class ListNode_Test {
 
     }
 
-    public static ListNode revert1(ListNode head) {
-        if (null == head) {
-            return null;
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dump = new ListNode(0, head);
+        ListNode fist = head;
+        ListNode slow = dump;
+        for (int i = 0; i < n; i++) {
+            fist = fist.next;
         }
-        ListNode last = head;
-        ListNode curr = head.next;
-        ListNode temp;
-        while (null != curr) {
-            temp = curr;
-            curr = curr.next;
-            temp.next = head;
-            head = temp;
+        while (null != fist) {
+            fist = fist.next;
+            slow = slow.next;
         }
-        last.next = null;
-        return head;
+        slow.next = slow.next.next;
+        return dump.next;
 
 
     }
@@ -112,21 +110,19 @@ public class ListNode_Test {
         if (null == head) {
             return null;
         }
-        ListNode pre = null;
-        ListNode curr = head;
-        ListNode currNext = null;
-        ListNode newHeader = null;
-        while (null != curr) {
-            currNext = curr.next;
-            if (null == currNext) {
-                newHeader = pre;
-            }
-            curr.next = pre;
-            pre = curr;
-            curr = currNext;
+        ListNode last = head;
+        ListNode curr = head.next;
 
+        ListNode temp;
+        while (null != curr) {
+            temp = curr;
+            curr = curr.next;
+            temp.next = head;
+            head = temp;
         }
-        return newHeader;
+        last.next = null;
+
+        return head;
 
     }
 
