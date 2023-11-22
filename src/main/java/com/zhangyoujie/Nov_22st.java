@@ -9,9 +9,7 @@ package com.zhangyoujie;
 public class Nov_22st {
 
     public static void main(String[] args) {
-        int ans = minPathCost(new int[][]{{5, 3}, {4, 0}, {2, 1}},
-                new int[][]{{9, 8}, {1, 5}, {10, 12}, {18, 6}, {2, 4}, {14, 3}});
-        System.out.println(ans);
+        moveZeroes(new int[]{1, 0});
     }
 
     public static int minPathCost(int[][] grid, int[][] moveCost) {
@@ -38,8 +36,63 @@ public class Nov_22st {
             ans = Math.min(dp[row - 1][i], ans);
         }
         return ans;
+    }
 
-        // dp[i][j] = math.min(dp[i-1[[j],dp[i[[j-1]) + moveCost[grid[][],j];
+
+    public static void moveZeroes(int[] nums) {
+        int length = nums.length;
+        int left = 0;
+        int right = left + 1;
+        while (right < length) {
+            if (nums[left] == 0) {
+                if (nums[right] == 0) {
+                    right++;
+                } else {
+                    int temp = nums[left];
+                    nums[left] = nums[right];
+                    nums[right] = temp;
+                    left++;
+                    right++;
+                }
+            } else {
+                left++;
+                right++;
+            }
+        }
+    }
+
+
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (null == headA || null == headB) return null;
+
+        ListNode pA = headA;
+        ListNode pB = headB;
+
+        // 当第一个到达空时候 第二个到空的间距就是两个链表的差距n步 先遍历完的 先走第二次的n步
+        // 则两个节点的遍历再第二次会一起到达公共节点
+        while (pA != pB) {
+            pA = null == pA ? headB :headA.next;
+            pB = null == pB ? headA :headB.next;
+        }
+        return pA;
 
     }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
 }
