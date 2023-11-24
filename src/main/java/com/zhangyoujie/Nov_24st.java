@@ -1,6 +1,6 @@
 package com.zhangyoujie;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -8,9 +8,34 @@ import java.util.stream.Collectors;
  * @date 2023/11/24
  */
 public class Nov_24st {
+    public static int[] countBits(int n) {
+        int[] ans = new int[n + 1];
+        for (int i = 0; i <= n; i++) {
+            String binaryString = Integer.toBinaryString(i);
+            int sum = 0;
+            for (int j = 0; j < binaryString.length(); j++) {
+                if (binaryString.charAt(j) == '1') {
+                    sum++;
+                }
+            }
+            ans[i] = sum;
+        }
+        return ans;
+    }
 
-    public static void main(String[] args) {
-        System.out.println(lengthOfLIS(new int[]{4, 10, 4, 3, 8, 9}));
+    public static boolean isPowerOfThree(int n) {
+        int max = 2147483647;
+        int target = 1;
+        for (int i = 0; i < 31; i++) {
+            if (target == n) {
+                return true;
+            }
+            target *= 3;
+            if (target > max) {
+                break;
+            }
+        }
+        return false;
     }
 
     public static int countPairs(List<Integer> nums, int target) {
@@ -36,6 +61,21 @@ public class Nov_24st {
 
         }
         return ans;
+    }
+
+    public static int nthSuperUglyNumber(int n, int[] primes) {
+
+        PriorityQueue<Integer> q = new PriorityQueue<>();
+        q.add(1);
+        while (n-- > 0) {
+            int x = q.poll();
+            if (n == 0) return x;
+            for (int k : primes) {
+                if (k <= Integer.MAX_VALUE / x) q.add(k * x);
+                if (x % k == 0) break;
+            }
+        }
+        return -1; // never
     }
 
 
