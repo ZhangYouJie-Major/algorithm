@@ -45,7 +45,7 @@ public class Nov_24st {
         // dp[i] 是以i结尾 递增子序列的长度 dp[i] = Math.max(dp[j]+1) 0 < j < i && num[i] > num[j]
         int[] dp = new int[length];
         dp[0] = 1;
-        int max = Integer.MIN_VALUE;
+        int max = 1;
         for (int i = 1; i < length; i++) {
             dp[i] = 1;
             for (int j = 0; j < i; j++) {
