@@ -13,13 +13,38 @@ public class Nov_24st {
         sortColors(new int[]{2, 0, 2, 1, 1, 0});
     }
 
-//    public String removeDuplicateLetters(String s) {
-//
-//    }
+    public String removeDuplicateLetters(String s) {
+
+    }
+
+
+    public int[] intersection(int[] nums1, int[] nums2) {
+        Set<Integer> set1 = new HashSet<>();
+        Set<Integer> set2 = new HashSet<>();
+        for (int i = 0; i < nums1.length; i++) {
+            set1.add(nums1[i]);
+        }
+        for (int i = 0; i < nums2.length; i++) {
+            set2.add(nums2[i]);
+        }
+        set1.retainAll(set2);
+        int[] ans = new int[set1.size()];
+
+        int i = 0;
+        for (Integer integer : set1) {
+            ans[i] = integer;
+            i++;
+        }
+        return ans;
+
+    }
 
     public static void sortColors(int[] nums) {
         int length = nums.length;
 
+        Set<String> set = new HashSet<>();
+
+        set. for
         int left = 0;
         int right = length - 1;
         for (int i = 0; i < length; i++) {
@@ -41,6 +66,7 @@ public class Nov_24st {
     }
 
     public static int[] countBits(int n) {
+
         int[] ans = new int[n + 1];
         for (int i = 0; i <= n; i++) {
             String binaryString = Integer.toBinaryString(i);
