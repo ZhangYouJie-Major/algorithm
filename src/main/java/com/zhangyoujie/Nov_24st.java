@@ -10,7 +10,33 @@ import java.util.stream.Collectors;
 public class Nov_24st {
 
     public static void main(String[] args) {
-        System.out.println(singleNumber(new int[]{2, 2, 3, 2}));
+        System.out.println("i".compareTo("love"));
+        System.out.println(topKFrequent(new String[]{"i", "love", "leetcode", "i", "love", "coding"}, 2));
+    }
+
+
+    public static List<String> topKFrequent(String[] words, int k) {
+        Map<String, Integer> map = new HashMap<>();
+        for (String word : words) {
+            Integer count = map.getOrDefault(word, 0);
+            count++;
+            map.put(word, count);
+        }
+        List<String> list = new ArrayList<>(map.keySet());
+        list.sort((o1, o2) -> map.get(o1).intValue() == map.get(o2).intValue() ?
+                o1.compareTo(o2) : map.get(o2) - map.get(o1));
+        return list.subList(0, k);
+
+
+    }
+
+    public int distributeCandies(int[] candyType) {
+        Set<Integer> set = new HashSet<>();
+        for (int i : candyType) {
+            set.add(i);
+        }
+        return Math.min(candyType.length / 2, set.size());
+
     }
 
     //100000
@@ -30,6 +56,7 @@ public class Nov_24st {
     }
 
     int ans = 0;
+
     public int pseudoPalindromicPaths(TreeNode root) {
         dfs(root, 0);
         return ans;
