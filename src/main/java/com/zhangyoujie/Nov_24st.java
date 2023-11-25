@@ -10,11 +10,48 @@ import java.util.stream.Collectors;
 public class Nov_24st {
 
     public static void main(String[] args) {
-        sortColors(new int[]{2, 0, 2, 1, 1, 0});
+        System.out.println(singleNumber(new int[]{2, 2, 3, 2}));
+    }
+
+    //100000
+    //011111
+    public static int singleNumber(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            Integer integer = map.getOrDefault(num, 0);
+            integer++;
+            if (integer == 3) {
+                map.remove(num);
+            } else {
+                map.put(num, integer);
+            }
+        }
+        return map.keySet().iterator().next();
+    }
+
+    int ans = 0;
+    public int pseudoPalindromicPaths(TreeNode root) {
+        dfs(root, 0);
+        return ans;
+    }
+
+    public void dfs(TreeNode node, int mask) {
+        mask ^= 1 << node.val;
+        if (null == node.left && null == node.right) {
+            if ((mask & (mask - 1)) == 0) {
+                ans++;
+            }
+        }
+        if (null != node.left) {
+            dfs(node.left, mask);
+        }
+        if (null != node.right) {
+            dfs(node.right, mask);
+        }
     }
 
     public String removeDuplicateLetters(String s) {
-
+        return "";
     }
 
 
@@ -43,8 +80,6 @@ public class Nov_24st {
         int length = nums.length;
 
         Set<String> set = new HashSet<>();
-
-        set. for
         int left = 0;
         int right = length - 1;
         for (int i = 0; i < length; i++) {
@@ -155,5 +190,25 @@ public class Nov_24st {
         }
         return max;
 
+    }
+}
+
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode() {
+    }
+
+    TreeNode(int val) {
+        this.val = val;
+    }
+
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
     }
 }
