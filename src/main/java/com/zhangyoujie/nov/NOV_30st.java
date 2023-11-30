@@ -1,7 +1,6 @@
 package com.zhangyoujie.nov;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -10,8 +9,44 @@ import java.util.Map;
 public class NOV_30st {
 
     public static void main(String[] args) {
-        boolean b = closeStrings("uau", "ssx");
-        System.out.println(b);
+        System.out.println(findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"));
+    }
+
+    public static int maximumSum(int[] nums) {
+
+        int max = -1;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int target = nums[i];
+            int sum = 0;
+            while (target != 0) {
+                sum += target % 10;
+                target /= 10;
+            }
+            if (map.containsKey(sum)) {
+                max = Math.max(max, nums[i] + nums[map.get(sum)]);
+                map.put(sum, nums[i] > nums[map.get(sum)] ? i : map.get(sum));
+            } else {
+                map.put(sum, i);
+            }
+        }
+        return max;
+
+    }
+
+    public static List<String> findRepeatedDnaSequences(String s) {
+
+        List<String> ans = new ArrayList<>();
+        int length = s.length();
+        Map<String, Integer> map = new HashMap<>();
+        for (int i = 0; i <= length - 10; i++) {
+            String sub = s.substring(i, i + 10);
+            map.put(sub, map.getOrDefault(sub, 0) + 1);
+            if (map.get(sub) > 1) {
+                ans.add(sub);
+            }
+        }
+        return ans;
     }
 
     public static boolean closeStrings(String word1, String word2) {
