@@ -1,4 +1,4 @@
-package com.zhangyoujie;
+package com.zhangyoujie.july;
 
 import java.util.*;
 import java.util.zip.Inflater;

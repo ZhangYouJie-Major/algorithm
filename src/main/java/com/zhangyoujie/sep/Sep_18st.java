@@ -1,4 +1,4 @@
-package com.zhangyoujie;
+package com.zhangyoujie.sep;
 
 import sun.awt.geom.AreaOp;
 

@@ -1,4 +1,4 @@
-package com.zhangyoujie;
+package com.zhangyoujie.nov;
 
 import java.util.*;
 import java.util.stream.Collectors;

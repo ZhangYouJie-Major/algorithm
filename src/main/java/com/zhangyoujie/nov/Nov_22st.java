@@ -1,4 +1,4 @@
-package com.zhangyoujie;
+package com.zhangyoujie.nov;
 
 /**
  * @author zhangyoujie
