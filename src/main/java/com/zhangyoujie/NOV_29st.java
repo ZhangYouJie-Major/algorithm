@@ -11,7 +11,6 @@ public class NOV_29st {
 
     public static void main(String[] args) {
 
-        System.out.println(2 & 1);
     }
 
 
@@ -78,6 +77,17 @@ public class NOV_29st {
     public boolean isPowerOfFour(int n) {
         // 二进制 10101010101010101010101010101010 4的次方奇数位的都是0 唯一的1都是偶数位
         return n > 0 && (n & (n - 1)) == 0 && ((n & 0xaaaaaaaa) == 0);
+    }
+
+    public static int hammingDistance(int x, int y) {
+        int sum = 0;
+        int z = x ^ y;
+        for (int i = 0; i < 32; i++) {
+            if ((z & (1 << i)) == (1 << i)) {
+                sum++;
+            }
+        }
+        return sum;
     }
 }
 
