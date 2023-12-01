@@ -9,7 +9,32 @@ import java.util.*;
 public class NOV_30st {
 
     public static void main(String[] args) {
-        System.out.println(findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT"));
+        System.out.println(uniqueLetterString("ABC"));
+    }
+
+    public static int uniqueLetterString(String s) {
+        int res = 0;
+        // 如果s为n位字符 字符x 在[1,5,8]的位置  则[0,4] [2,7] [6,n]都是唯一的下标
+        int length = s.length();
+
+        Map<Character, List<Integer>> map = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            if (!map.containsKey(s.charAt(i))) {
+                map.put(s.charAt(i), new ArrayList<>());
+                map.get(s.charAt(i)).add(-1);
+            }
+            map.get(s.charAt(i)).add(i);
+        }
+
+        for (Map.Entry<Character, List<Integer>> characterListEntry : map.entrySet()) {
+            List<Integer> value = characterListEntry.getValue();
+            value.add(s.length());
+            for (int i = 1; i < value.size() - 1; i++) {
+                res += ((value.get(i) - value.get(i - 1)) * (value.get(i + 1) - value.get(i)));
+            }
+        }
+        return res;
+
     }
 
     public static int maximumSum(int[] nums) {
@@ -78,5 +103,37 @@ public class NOV_30st {
         });
         return map3.equals(map4);
 
+    }
+
+    public static int sumSubarrayMins(int[] arr) {
+        int mod = 1000000007;
+
+        int length = arr.length;
+        long ans = 0;
+
+        int[] left = new int[length];
+        int[] right = new int[length];
+        Deque<Integer> deque = new ArrayDeque<>();
+        for (int i = 0; i < length; i++) {
+            // 维护一个单调递增栈
+            while (!deque.isEmpty() && arr[i] <= arr[deque.peek()]) {
+                deque.pop();
+            }
+            left[i] = i - (deque.isEmpty() ? -1 : deque.peek());
+            deque.push(i);
+        }
+        deque.clear();
+        for (int i = length - 1; i >= 0; i--) {
+            // 维护一个单调递增栈
+            while (!deque.isEmpty() && arr[i] < arr[deque.peek()]) {
+                deque.pop();
+            }
+            right[i] = (deque.isEmpty() ? length : deque.peek()) - i;
+            deque.push(i);
+        }
+        for (int i = 0; i < length; i++) {
+            ans = (ans + ((long) arr[i] * left[i] * right[i])) % mod;
+        }
+        return (int) ans;
     }
 }
