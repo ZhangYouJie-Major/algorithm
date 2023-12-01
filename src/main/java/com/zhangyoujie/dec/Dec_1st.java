@@ -1,7 +1,9 @@
 package com.zhangyoujie.dec;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.zhangyoujie.aug.Aug_27st;
+import com.zhangyoujie.tool.ListNode;
+
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -41,5 +43,22 @@ public class Dec_1st {
         }
         return -1;
     }
+
+    public ListNode detectCycle(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+        Set<ListNode> visit = new HashSet<>();
+        while (head.next != null) {
+            if (visit.contains(head)) {
+                return head;
+            } else {
+                visit.add(head);
+            }
+            head = head.next;
+        }
+        return null;
+    }
+
 
 }
