@@ -1,7 +1,5 @@
 package com.zhangyoujie.dec;
 
-import com.zhangyoujie.aug.Aug_27st;
-import com.zhangyoujie.tool.ListNode;
 
 import java.util.*;
 
@@ -60,5 +58,145 @@ public class Dec_1st {
         return null;
     }
 
+    // cbacdcbc
+    // acdb
+    public static String removeDuplicateLetters(String s) {
+
+        boolean[] vis = new boolean[26];
+        int[] num = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            num[s.charAt(i) - 'a']++;
+        }
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (!vis[ch - 'a']) {
+                while (sb.length() > 0 && sb.charAt(sb.length() - 1) > ch) {
+                    if (num[sb.charAt(sb.length() - 1) - 'a'] > 0) {
+                        vis[sb.charAt(sb.length() - 1) - 'a'] = false;
+                        sb.deleteCharAt(sb.length() - 1);
+                    } else {
+                        break;
+                    }
+                }
+                vis[ch - 'a'] = true;
+                sb.append(ch);
+            }
+            num[ch - 'a'] -= 1;
+        }
+        return sb.toString();
+    }
+
+
+    public static ListNode removeElements(ListNode head, int val) {
+        ListNode node = new ListNode(0, head);
+        ListNode tail = node;
+        while (tail != null) {
+            if (tail.next != null && tail.next.val == val) {
+                tail.next = tail.next.next;
+                continue;
+            }
+            tail = tail.next;
+        }
+        return node.next;
+    }
+
+    static int sum = 0;
+
+    public static TreeNode bstToGst(TreeNode root) {
+        if (root == null) {
+            return null;
+        }
+
+        bstToGst(root.right);
+        sum += root.val;
+        root.val = sum;
+        bstToGst(root.left);
+
+        return root;
+    }
+
+    public static void dfs(TreeNode node, PriorityQueue<Integer> queue) {
+        if (null == node) {
+            return;
+        }
+        queue.offer(node.val);
+        dfs(node.left, queue);
+        dfs(node.right, queue);
+    }
+
+
+    public static void dfsSet(TreeNode node, PriorityQueue<Integer> queue) {
+        if (null == node) {
+            return;
+        }
+        PriorityQueue<Integer> queueSet = new PriorityQueue<>(queue);
+        int sum = 0;
+        while (!queueSet.isEmpty() && queueSet.peek() >= node.val) {
+            sum += queueSet.poll();
+        }
+        node.val = sum;
+        dfs(node.left, queue);
+        dfs(node.right, queue);
+    }
+
+
+    public static void main(String[] args) {
+        Integer[] values = {4, 1, 6, 0, 2, 5, 7, null, null, null, 3, null, null, null, 8};
+        TreeNode root = buildBST(values);
+        bstToGst(root);
+    }
+
+    public static TreeNode buildBST(Integer[] values) {
+        if (values == null || values.length == 0) {
+            return null;
+        }
+
+        TreeNode[] nodes = new TreeNode[values.length];
+        for (int i = 0; i < values.length; i++) {
+            if (values[i] != null) {
+                nodes[i] = new TreeNode(values[i]);
+            }
+        }
+
+        for (int i = 0; i < values.length; i++) {
+            if (nodes[i] != null) {
+                int leftIndex = 2 * i + 1;
+                int rightIndex = 2 * i + 2;
+
+                if (leftIndex < values.length) {
+                    nodes[i].left = nodes[leftIndex];
+                }
+
+                if (rightIndex < values.length) {
+                    nodes[i].right = nodes[rightIndex];
+                }
+            }
+        }
+
+        return nodes[0];
+    }
+
 
 }
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode() {
+    }
+
+    ListNode(int val) {
+        this.val = val;
+    }
+
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
+}
+
+
+
