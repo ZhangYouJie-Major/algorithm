@@ -1,7 +1,7 @@
 package com.zhangyoujie.dec;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * @author zhangyoujie
@@ -10,9 +10,93 @@ import java.util.List;
 public class Dec_6st {
 
     public static void main(String[] args) {
-        System.out.println(minimumTotalPrice(4, new int[][]{{0, 1}, {1, 2}, {1, 3}},
-                new int[]{2, 2, 10, 6}, new int[][]{{0, 3}, {2, 1}, {2, 3}}
-        ));
+//        TreeNode root = new TreeNode(5);
+//        root.left = new TreeNode(4);
+//        root.right = new TreeNode(8);
+//        root.left.left = new TreeNode(11);
+//        root.left.left.left = new TreeNode(7);
+//        root.left.left.right = new TreeNode(2);
+//        root.right.left = new TreeNode(13);
+//        root.right.right = new TreeNode(4);
+//        root.right.right.left = new TreeNode(5);
+//        root.right.right.right = new TreeNode(1);
+//        System.out.println(pathSum(root, 22));
+
+        System.out.println(powerfulIntegers(2, 3, 10));
+    }
+
+    public static List<Integer> powerfulIntegers(int x, int y, int bound) {
+        Set<Integer> ans = new HashSet<>();
+
+        for (int i = 0; i < 30; i++) {
+            for (int j = 0; j < 30; j++) {
+                int count = (int) Math.pow(x, i) + (int) Math.pow(y, j);
+                if (count <= bound && !ans.contains(count) && count > 0) {
+                    ans.add(count);
+                }
+            }
+        }
+        return new ArrayList<>(ans);
+    }
+
+    public TreeNode invertTree(TreeNode root) {
+        dfs(root);
+        return root;
+    }
+
+    public void dfs(TreeNode root) {
+        if (null != root) {
+            TreeNode temp = root.right;
+            root.right = root.left;
+            root.left = temp;
+            dfs(root.left);
+            dfs(root.right);
+        }
+    }
+
+    public static boolean hasPathSum(TreeNode root, int targetSum) {
+        return dfs(root, 0, targetSum);
+    }
+
+    public static List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> tails = new ArrayList<>();
+        dfs(root, new ArrayList<>(), tails, targetSum);
+        return tails;
+    }
+
+    public static void dfs(TreeNode root, List<Integer> tail, List<List<Integer>> tails, int targetSum) {
+        if (null != root) {
+            if (root.left == null && root.right == null) {
+                tail.add(root.val);
+                int sum = 0;
+                for (Integer count : tail) {
+                    sum += count;
+                }
+                if (sum == targetSum) {
+                    tails.add(new ArrayList<>(tail));
+                }
+            } else {
+                tail.add(root.val);
+                dfs(root.left, tail, tails, targetSum);
+                dfs(root.right, tail, tails, targetSum);
+            }
+            tail.remove(tail.size() - 1);
+        }
+    }
+
+    public static boolean dfs(TreeNode root, int sum, int targetSum) {
+        if (null != root) {
+            sum += root.val;
+            if (root.left == null && root.right == null) {
+                if (sum == targetSum) {
+                    return true;
+                }
+            } else {
+                return dfs(root.left, sum, targetSum)
+                        || dfs(root.right, sum, targetSum);
+            }
+        }
+        return false;
     }
 
     public static int beautifulSubstrings(String s, int k) {
