@@ -12,15 +12,53 @@ import java.util.*;
 public class Dec_7st {
 
     public static void main(String[] args) {
-        // 示例数据
-        int[] l1Array = {7, 2, 4, 3};
-        int[] l2Array = {5, 6, 4};
+        System.out.println('a' - 'A');
 
-        // 生成两个链表
-        ListNode linkedList1 = arrayToList(l1Array);
-        ListNode linkedList2 = arrayToList(l2Array);
-        System.out.println(largeGroupPositions("aaa"));
+    }
 
+    public int monotoneIncreasingDigits(int n) {
+        while (n >= 0) {
+            String s = Integer.toString(n);
+            char[] charArray = s.toCharArray();
+            int length = charArray.length;
+            boolean flag = true;
+            for (int i = 1; i < length; i++) {
+                if (charArray[i] - charArray[i - 1] < 0) {
+                    flag = false;
+                }
+            }
+            if (flag) {
+                return n;
+            }
+            n--;
+        }
+        return 0;
+    }
+
+    public static boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        Deque<Integer> deque1 = new ArrayDeque<>();
+        Deque<Integer> deque2 = new ArrayDeque<>();
+        leafSimilarDfs(root1, deque1);
+        leafSimilarDfs(root2, deque2);
+        if (deque1.size() == deque2.size()) {
+            while (!deque1.isEmpty()) {
+                if (!deque1.pop().equals(deque2.pop())) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public static void leafSimilarDfs(TreeNode root, Deque<Integer> deque) {
+        if (null != root) {
+            if (null == root.left && null == root.right) deque.push(root.val);
+            leafSimilarDfs(root.left, deque);
+            leafSimilarDfs(root.right, deque);
+
+        }
     }
 
 
