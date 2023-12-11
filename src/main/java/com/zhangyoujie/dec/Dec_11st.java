@@ -14,6 +14,26 @@ public class Dec_11st {
         System.out.println(minimumEffortPath(new int[][]{{1, 2, 2}, {3, 8, 2}, {5, 3, 5}}));
     }
 
+    public static int maxSubarrayLength(int[] nums, int k) {
+        /*
+         * 滑动窗口 当某个num[i]超过k时候 滑动左边的指针 然后每个数的次数不断的-1
+         * 如果窗口内的num[i]不大于k时  此时窗口的大小为 i - left + 1
+         * ans = Math.max(ans, i - left + 1)
+         */
+        int length = nums.length;
+        int ans = 0;
+        int left = 0;
+        Map<Integer, Integer> ctn = new HashMap<>();
+        for (int i = 0; i < length; i++) {
+            ctn.merge(nums[i], 1, Integer::sum);
+            while (ctn.get(nums[i]) > k) {
+                ctn.merge(nums[left++], -1, Integer::sum);
+            }
+            ans = Math.max(ans, i - left + 1);
+        }
+        return ans;
+    }
+
     public static int minimumEffortPath(int[][] heights) {
         // 因为给定的 1 <= heights[i][j] <= 10 ^ 6
         /* m行 n列
