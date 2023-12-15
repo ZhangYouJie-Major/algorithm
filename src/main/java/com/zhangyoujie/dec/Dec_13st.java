@@ -1,9 +1,6 @@
 package com.zhangyoujie.dec;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -12,9 +9,30 @@ import java.util.Queue;
 public class Dec_13st {
 
     public static void main(String[] args) {
-        nextGreaterElements(new int[]{1,2,1});
+        System.out.println(checkDynasty(new int[]{0, 6, 9, 0, 7}));
     }
 
+    public static boolean checkDynasty(int[] places) {
+        Arrays.sort(places);
+        int length = places.length;
+        int zero = 0;
+        int unZero = 0;
+        int max = places[length - 1];
+        Set<Integer> set = new HashSet<>();
+        for (int i = 0; i < length; i++) {
+            if (places[i] != 0) {
+                set.add(places[i]);
+            } else {
+                zero++;
+            }
+        }
+        for (int i = max - length + 1; i <= max; i++) {
+            if (!set.contains(i)) {
+                unZero++;
+            }
+        }
+        return zero == unZero;
+    }
 
     public static int[] nextGreaterElements(int[] nums) {
         int length = nums.length;
