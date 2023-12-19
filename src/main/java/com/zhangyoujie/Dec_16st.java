@@ -1,8 +1,6 @@
 package com.zhangyoujie;
 
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -15,9 +13,47 @@ public class Dec_16st {
         countIntervals.add(2, 3);
         countIntervals.add(7, 10);
         countIntervals.add(5, 8);
-        System.out.println(countIntervals.count());
+        originalDigits("121");
     }
 
+
+    public static String originalDigits(String s) {
+        // 创建一个 Map 用于存储数字和其英文表示
+        Map<Integer, Character> numberWordsMap = new HashMap<>();
+
+        // 将数字和英文表示放入 Map 中
+        numberWordsMap.put(0, (char) ('z' + 'e' + 'r' + 'o'));
+        numberWordsMap.put(1, (char) ('o' + 'n' + 'e'));
+        numberWordsMap.put(2, (char) ('t' + 'w' + 'o'));
+        numberWordsMap.put(3, (char) ('t' + 'h' + 'r' + 'e' + 'e'));
+        numberWordsMap.put(4, (char) ('f' + 'o' + 'u' + 'r'));
+        numberWordsMap.put(5, (char) ('f' + 'i' + 'v' + 'e'));
+        numberWordsMap.put(6, (char) ('s' + 'i' + 'x'));
+        numberWordsMap.put(7, (char) ('s' + 'e' + 'v' + 'e' + 'n'));
+        numberWordsMap.put(8, (char) ('e' + 'i' + 'g' + 'h' + 't'));
+        numberWordsMap.put(9, (char) ('n' + 'i' + 'n' + 'e'));
+        return "numberWordsMap";
+    }
+
+    public int minExtraChar(String s, String[] dictionary) {
+        Set<String> set = new HashSet<>();
+        for (int i = 0; i < dictionary.length; i++) {
+            set.add(dictionary[i]);
+        }
+        int length = s.length();
+        //标识只分割前i个字符  最少能剩下几个
+        int[] dp = new int[length + 1];
+        for (int i = 1; i <= length; i++) {
+            dp[i] = dp[i - 1];
+            for (int j = 0; j < i; j++) {
+
+            }
+        }
+
+
+        return 1;
+
+    }
 
 }
 
