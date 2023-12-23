@@ -37,9 +37,9 @@ public class Dec_23st_周赛 {
         return max;
     }
 
-    public static int incremovableSubarrayCount(int[] nums) {
+    public static long incremovableSubarrayCount(int[] nums) {
         int length = nums.length;
-        int sum = 0;
+        long sum = 0;
         Deque<Integer> deque = new ArrayDeque<>();
 
         for (int i = 0; i < length; i++) {
