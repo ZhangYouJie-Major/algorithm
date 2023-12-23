@@ -1,8 +1,7 @@
 package com.zhangyoujie.dec;
 
 import java.sql.SQLOutput;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -11,7 +10,42 @@ import java.util.Map;
 public class Dec_22st {
 
     public static void main(String[] args) {
-        System.out.println(minimumMountainRemovals(new int[]{1, 2, 1, 3, 4, 4}));
+        findOcurrences("alice is a good girl she is a good student", "a", "good");
+    }
+
+
+    public static String[] findOcurrences(String text, String first, String second) {
+        List<String> list = new ArrayList<>();
+        String[] split = text.split(" ");
+        for (int i = 0; i < split.length - 2; i++) {
+            if (Objects.equals(split[i], first) && Objects.equals(split[i + 1], second)) {
+                list.add(split[i + 2]);
+            }
+        }
+        String[] ans = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            ans[i] = list.get(i);
+        }
+        return ans;
+
+    }
+
+    public static int respace(String[] dictionary, String sentence) {
+
+        Set<String> set = new HashSet<>(Arrays.asList(dictionary));
+        int length = sentence.length();
+        int[] dp = new int[length + 1];
+        //dp[i] 表示前i个字符中最少的匹配数
+        for (int i = 1; i <= length; i++) {
+            dp[i] = dp[i - 1] + 1;
+            for (int j = 0; j < i; j++) {
+                // 如果 字符串的(j,i) 包含在字典中 则 dp[i] = Math.min(dp[j],dp[i])
+                if (set.contains(sentence.substring(j, i)))
+                    dp[i] = Math.min(dp[i], dp[j]);
+            }
+        }
+
+        return dp[length];
     }
 
 
