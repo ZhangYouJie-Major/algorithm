@@ -7,6 +7,7 @@ public class Dec_17st {
     public static int[][] divideArray(int[] nums, int k) {
         int length = nums.length;
         Arrays.sort(nums);
+
         int[][] ans = new int[length / 3][3];
         for (int i = 0; i < length; i += 3) {
             if (nums[i + 1] - nums[i] > k || nums[i + 2] - nums[i] > k) {
