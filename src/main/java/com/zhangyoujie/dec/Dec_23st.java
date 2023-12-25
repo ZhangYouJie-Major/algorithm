@@ -15,7 +15,26 @@ public class Dec_23st {
 
     public static void main(String[] args) {
 //        minImpossibleOR(new int[]{5, 3, 2});
-        colorTheArray(4, new int[][]{{0, 2}, {1, 2}, {3, 1}, {1, 1}, {2, 1}});
+        distinctDifferenceArray(new int[]{3, 2, 3, 4, 2});
+    }
+
+    public static int[] distinctDifferenceArray(int[] nums) {
+        int length = nums.length;
+        int[] ans = new int[length];
+        for (int i = 0; i < length; i++) {
+            Set<Integer> set1 = new HashSet<>();
+            Set<Integer> set2 = new HashSet<>();
+
+            for (int j = 0; j <= i; j++) {
+                set1.add(nums[j]);
+            }
+            for (int j = i + 1; j < length; j++) {
+                set2.add(nums[j]);
+            }
+            ans[i] = set1.size() - set2.size();
+        }
+
+        return ans;
     }
 
     public String[] findWords(String[] words) {
