@@ -13,36 +13,28 @@ import java.util.Scanner;
  * @date 2023/12/27
  */
 public class Dec_27st {
+    
 
+    private List<List<Integer>> ans = new ArrayList<>();
+    private int[] nums;
 
-    public static void main(String[] args) {
-
-        List<List<Integer>> subsets = subsets(new int[]{1, 2, 3});
-
+    public List<List<Integer>> subsets(int[] nums) {
+        this.nums = nums;
+        dfs(0, new ArrayList<>());
+        return ans;
     }
 
-
-    public static List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ans = new ArrayList<>();
-        int c = 0;
-        for (int i = 0; i < nums.length; i++) {
-            c = c | (1 << (10 + nums[i]));
+    private void dfs(int i, List<Integer> path) {
+        List<Integer> temp = new ArrayList<>(path);
+        if (i == nums.length) {
+            ans.add(new ArrayList<>(path));
+            return;
         }
-        // for (int sub = c; sub > 0; sub = (sub - 1) & c) 枚举所有的子集
-        for (int sub = c; sub > 0; sub = (sub - 1) & c) {
-            List<Integer> temp = new ArrayList<>();
-
-            StringBuilder s = new StringBuilder(Integer.toBinaryString(sub));
-            String binaryString = s.reverse().toString();
-            for (int i = binaryString.toCharArray().length - 1; i >= 0; i--) {
-                if (binaryString.charAt(i) == '1') {
-                    temp.add(i - 10);
-                }
-            }
-            ans.add(temp);
-        }
-        ans.add(new ArrayList<>());
-        return ans;
+        //不选num[i]
+        dfs(i + 1, path);
+        //选
+        path.add(nums[i]);
+        dfs(i + 1, path);
 
     }
 
