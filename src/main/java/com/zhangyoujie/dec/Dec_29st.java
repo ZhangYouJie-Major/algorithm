@@ -17,7 +17,26 @@ public class Dec_29st {
     }
 
     public static void main(String[] args) {
-        addToArrayForm(new int[]{9, 9, 9, 9, 9, 9, 9, 9, 9, 9}, 1);
+        System.out.println(kthSmallest(new int[][]{{1, 2}, {1, 3}}, 1));
+
+    }
+
+    public static int kthSmallest(int[][] matrix, int k) {
+        int row = matrix.length;
+        PriorityQueue<int[]> queue = new PriorityQueue<>(Comparator.comparing(a -> a[0]));
+        for (int i = 0; i < row; i++) {
+            queue.add(new int[]{matrix[i][0], i, 0});
+        }
+        for (int i = 0; i < k - 1; i++) {
+            int[] poll = queue.poll();
+            int m = poll[1];
+            int n = poll[2];
+
+            if (n != row - 1) {
+                queue.add(new int[]{matrix[m][n + 1], m, n + 1});
+            }
+        }
+        return queue.poll()[0];
 
     }
 
