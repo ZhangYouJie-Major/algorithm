@@ -1,9 +1,6 @@
 package com.zhangyoujie.jan;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author zhangyoujie
@@ -14,13 +11,66 @@ public class Jan_8st {
     public static void main(String[] args) {
         Jan_8st st = new Jan_8st();
 
-        System.out.println(st.partition("aab"));
+        System.out.println(st.combine(4, 2));
     }
+
+
+    public int rob(TreeNode root) {
+        int[] dfs = dfs(root);
+        return Math.max(dfs[0], dfs[1]);
+    }
+
+    public int[] dfs(TreeNode node) {
+        if (null == node) {
+            return new int[]{0, 0};
+        }
+        int[] left = dfs(node.left);
+        int[] right = dfs(node.right);
+        //选当前节点 左右子树不选 + 当前值
+        int rob = left[1] + right[1] + node.val;
+        // 不选当前节点 Math.max(左子树选,左子不树选) + Math.max(右子树选,右子不树选)
+        int notRob = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);
+        return new int[]{rob, notRob};
+    }
+
+    public int[] shortestSeq(int[] big, int[] small) {
+        // 100000
+
+        return new int[1];
+    }
+
 
     List<List<String>> ans = new ArrayList<>();
     List<String> path = new ArrayList<>();
 
     String s;
+
+
+    List<List<Integer>> ans1 = new ArrayList<>();
+    List<Integer> path1 = new ArrayList<>();
+    int n;
+    int k;
+
+    public List<List<Integer>> combine(int n, int k) {
+        this.n = n;
+        this.k = k;
+        dfs(1);
+        return ans1;
+    }
+
+    public void dfs(int index) {
+
+        if (path1.size() == k) {
+            ans1.add(new ArrayList<>(path1));
+            return;
+        }
+        // 起始位置大于 n  - (k - path1.size()) + 1 就是无效递归
+        for (int i = index; i <= n - (k - path1.size()) + 1; i++) {
+            path1.add(i);
+            dfs(i + 1);
+            path1.remove(path1.size() - 1);
+        }
+    }
 
     public List<List<String>> partition(String s) {
         // aab  选逗号的地方 a,ab  a,a,b  插入逗号的下标只能是小于length-1
