@@ -8,12 +8,6 @@ import java.util.*;
  */
 public class Jan_8st {
 
-    public static void main(String[] args) {
-        Jan_8st st = new Jan_8st();
-
-        System.out.println(st.combine(4, 2));
-    }
-
 
     public int rob(TreeNode root) {
         int[] dfs = dfs(root);
