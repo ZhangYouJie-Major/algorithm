@@ -1,6 +1,8 @@
 package com.zhangyoujie.jan;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author zhangyoujie
@@ -9,8 +11,59 @@ import java.util.Arrays;
 public class Jan_11st {
 
     public static void main(String[] args) {
-        System.out.println(minDeletions("accdcdadddbaadbc"));
+        System.out.println(numSubarraysWithSum(new int[]{1, 0, 1, 0, 1}, 2));
     }
+
+
+    public static int numSubarraysWithSum(int[] nums, int goal) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int sum = 0;
+        int ans = 0;
+        for (int num : nums) {
+            map.put(sum, map.getOrDefault(sum, 0) + 1);
+            sum += num;
+            // sum[j] - sum[i] = goal  我们记录每次 sum[j] - goal = sum[i]
+            // 因此我们遍历到sum[j]  找出对应  sum[j] - goal 对应的计数即可
+            ans += map.getOrDefault(sum - goal, 0);
+        }
+
+        return ans;
+    }
+
+    public static long wonderfulSubstrings(String word) {
+        int length = word.length();
+        int[] count = new int[10];
+
+        long ans = 0;
+        int left = 0;
+        for (int i = 0; i < length; i++) {
+            count[word.charAt(i) - 'a']++;
+            if (!isOk(count)) {
+                while (left < i) {
+                    if (!isOk(count)) {
+                        left++;
+                    }
+                }
+                ans += (i - left) + 1;
+            } else {
+                ans++;
+            }
+        }
+        return ans;
+
+    }
+
+    public static boolean isOk(int[] count) {
+        int ctn = 0;
+        for (int j = 0; j < 10; j++) {
+            if (count[j] % 2 != 0) {
+                ctn++;
+            }
+        }
+        return ctn <= 1;
+    }
+
 
     public static int minDeletions(String s) {
         int[] count = new int[26];
