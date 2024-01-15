@@ -12,8 +12,7 @@ import java.util.List;
  */
 public class Jan_10st {
 
-    public static void main(String[] args) {
-        Jan_10st st = new Jan_10st();
+    public static void main(String[] args) {Jan_10st st = new Jan_10st();
         System.out.println(st.combinationSum4(new int[]{1, 2, 3}, 4));
     }
 
