@@ -9,7 +9,45 @@ import java.util.*;
 public class Jan_17st {
 
     public static void main(String[] args) {
-        System.out.println(purchasePlans(new int[]{2, 5, 3, 5}, 6));
+        Jan_17st st = new Jan_17st();
+        System.out.println(st.longestIncreasingPath(new int[][]{{9, 9, 4}, {6, 6, 8}, {2, 1, 1}}));
+    }
+
+    int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    public int longestIncreasingPath(int[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+
+        int max = 0;
+        int[][] memo = new int[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                max = Math.max(max, dfs(i, j, matrix, memo));
+            }
+        }
+        return max;
+    }
+
+    public int dfs(int x, int y, int[][] matrix, int[][] memo) {
+
+        if (memo[x][y] != 0) {
+            return memo[x][y];
+        }
+
+        memo[x][y]++;
+        for (int[] dir : dirs) {
+            int newX = x + dir[0];
+            int newY = y + dir[1];
+
+            if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length
+                    && matrix[newX][newY] > matrix[x][y]) {
+                // 当前节点向下递归
+                memo[x][y] = Math.max(memo[x][y], dfs(newX, newY, matrix, memo) + 1);
+            }
+        }
+        return memo[x][y];
     }
 
     public static int purchasePlans(int[] nums, int target) {
