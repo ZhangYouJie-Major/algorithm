@@ -13,7 +13,33 @@ import java.util.stream.Collectors;
 public class Jan_15st {
 
     public static void main(String[] args) {
-        System.out.println(beautifulIndices("isawsquirrelnearmysquirrelhouseohmy", "my1", "squirrel", 15));
+        System.out.println(beautifulIndices("isawsquirrelnearmysquirrelhouseohmy", "my", "squirrel", 15));
+        kmp("isawsquirrelnearmysquirrelhouseohmy", "my");
+    }
+
+
+    public static int kmp(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        int sLen = s.length();
+        int pLen = p.length();
+        char[] sCharArray = s.toCharArray();
+        char[] pCharArray = p.toCharArray();
+        int i = 0;
+        int j = 0;
+        while (i < sLen && j < pLen) {
+            if (sCharArray[i] == pCharArray[j]) {
+                i++;
+                j++;
+            } else {
+                i = i - j + 1;
+                j = 0;
+            }
+        }
+        if (j == pLen) {
+            return i - j;
+        } else {
+            return -1;
+        }
     }
 
     public static List<Integer> beautifulIndices(String s, String a, String b, int k) {
