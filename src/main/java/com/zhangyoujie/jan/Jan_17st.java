@@ -1,5 +1,7 @@
 package com.zhangyoujie.jan;
 
+import sun.security.provider.Sun;
+
 import java.util.*;
 
 /**
@@ -10,44 +12,68 @@ public class Jan_17st {
 
     public static void main(String[] args) {
         Jan_17st st = new Jan_17st();
-        System.out.println(st.longestIncreasingPath(new int[][]{{9, 9, 4}, {6, 6, 8}, {2, 1, 1}}));
+        System.out.println(st.findTargetSumWays(new int[]{1,1,1,1,1}, 3));
     }
 
-    int[][] dirs = new int[][]{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    public int findTargetSumWays(int[] nums, int target) {
+        int[][] memo = new int[20][40000];
+        for (int[] ints : memo) {
+            Arrays.fill(ints, -30000);
+        }
+        return dfs(0, 0, target, nums, memo);
+    }
+
+    private int dfs(int index, int sum, int target, int[] nums, int[][] memo) {
+        if (index == nums.length) {
+            if (sum == target) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        if (memo[index][sum + 20000] != -30000) {
+            return memo[index][sum + 20000];
+        }
+        int ans = dfs(index + 1, sum + nums[index], target, nums, memo) +
+                dfs(index + 1, sum - nums[index], target, nums, memo);
+        memo[index][sum + 20000] = ans;
+        return ans;
+    }
+
+    int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
 
     public int longestIncreasingPath(int[][] matrix) {
-        int m = matrix.length;
-        int n = matrix[0].length;
 
-        int max = 0;
-        int[][] memo = new int[m][n];
+        int row = matrix.length;
+        int col = matrix[0].length;
+        int[][] memo = new int[row][col];
 
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                max = Math.max(max, dfs(i, j, matrix, memo));
+        int ans = 0;
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                ans = Math.max(ans, dfs(i, j, matrix, memo));
             }
         }
-        return max;
+        return ans;
     }
 
-    public int dfs(int x, int y, int[][] matrix, int[][] memo) {
-
-        if (memo[x][y] != 0) {
-            return memo[x][y];
+    public int dfs(int row, int col, int[][] matrix, int[][] memo) {
+        if (memo[row][col] != 0) {
+            return memo[row][col];
         }
+        memo[row][col]++;
 
-        memo[x][y]++;
         for (int[] dir : dirs) {
-            int newX = x + dir[0];
-            int newY = y + dir[1];
-
-            if (newX >= 0 && newX < matrix.length && newY >= 0 && newY < matrix[0].length
-                    && matrix[newX][newY] > matrix[x][y]) {
-                // 当前节点向下递归
-                memo[x][y] = Math.max(memo[x][y], dfs(newX, newY, matrix, memo) + 1);
+            int newRow = row + dir[0];
+            int newCol = row + dir[1];
+            if (newRow >= 0 && newRow < matrix.length && newCol >= 0 && newCol <= matrix[0].length
+                    && matrix[newRow][newCol] > matrix[row][col]) {
+                memo[row][col] = Math.max(memo[row][col], dfs(newRow, newCol, matrix, memo) + 1);
             }
         }
-        return memo[x][y];
+        return memo[row][col];
+
     }
 
     public static int purchasePlans(int[] nums, int target) {
