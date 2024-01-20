@@ -10,24 +10,102 @@ public class Jan_12st {
 
 
     public static void main(String[] args) {
-        int[] nums = new int[]{1, 5, 4, 4, 7, 3, 1};
-        int[] pre = new int[nums.length + 1];
-        int[] diff = new int[nums.length];
-
-        diff[0] = nums[0];
-        for (int i = 1; i < nums.length; i++) {
-            diff[i] = nums[i] - nums[i - 1];
-        }
-        diff[2] += 2;
-        diff[5] -= 2;
-
-        int[] ans = new int[nums.length];
-        ans[0] = diff[0];
-        for (int i = 1; i < diff.length; i++) {
-            ans[i] += diff[i] + nums[i - 1];
-        }
-        System.out.println(ans);
+//        int[] nums = new int[]{1, 5, 4, 4, 7, 3, 1};
+//        int[] pre = new int[nums.length + 1];
+//        int[] diff = new int[nums.length];
+//
+//        diff[0] = nums[0];
+//        for (int i = 1; i < nums.length; i++) {
+//            diff[i] = nums[i] - nums[i - 1];
+//        }
+//        diff[2] += 2;
+//        diff[5] -= 2;
+//
+//        int[] ans = new int[nums.length];
+//        ans[0] = diff[0];
+//        for (int i = 1; i < diff.length; i++) {
+//            ans[i] += diff[i] + nums[i - 1];
+//        }
+//        System.out.println(ans);
+        System.out.println(convert("PAYPALISHIRING", 3));
     }
+
+
+    public static List<List<Integer>> threeSum(int[] nums) {
+        int length = nums.length;
+        Arrays.sort(nums);
+        List<List<Integer>> ans = new ArrayList<>();
+        for (int i = 0; i < length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            int left = i + 1;
+            int right = length - 1;
+            //和最小的两个数相加都大于零 直接终止
+            if (nums[i] + nums[left] + nums[left + 1] > 0) break;
+            // 和最大的两个数相加都小于零 直接跳过
+            if (nums[i] + nums[right] + nums[right - 1] < 0) continue;
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+                if (sum > 0) {
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    left++;
+                    while (left < right && nums[left] == nums[left - 1]) {
+                        left++;
+                    }
+                    right--;
+                    while (left < right && nums[right] == nums[right + 1]) {
+                        right--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+
+    public static int threeSumClosest(int[] nums, int target) {
+        int length = nums.length;
+        Arrays.sort(nums);
+        int diff = Integer.MAX_VALUE;
+        int[] a = new int[3];
+        for (int i = 0; i < length - 2; i++) {
+            for (int j = i + 1; j < length - 1; j++) {
+                for (int k = j + 1; k < length; k++) {
+                    int sum = nums[i] + nums[j] + nums[k];
+                    if (Math.abs(sum - target) < diff) {
+                        diff = Math.abs(sum - target);
+                        a = new int[]{nums[i], nums[j], nums[k]};
+                    }
+                }
+            }
+        }
+        return a[0] + a[1] + a[2];
+    }
+
+    public static String convert(String s, int numRows) {
+        if (numRows < 2) {
+            return s;
+        }
+        List<StringBuffer> rows = new ArrayList<>();
+        for (int i = 0; i < numRows; i++) {
+            rows.add(new StringBuffer());
+        }
+        int i = 0;
+        int flag = -1;
+        for (char c : s.toCharArray()) {
+            rows.get(i).append(c);
+            if (i == 0 || i == numRows - 1) flag = -flag;
+            i += flag;
+        }
+        String ans = "";
+        for (StringBuffer row : rows) {
+            ans += row.toString();
+        }
+        return ans;
+    }
+
 
     public int subarraySum(int[] nums, int k) {
         int length = nums.length;
