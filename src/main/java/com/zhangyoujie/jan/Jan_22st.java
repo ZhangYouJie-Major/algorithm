@@ -11,8 +11,26 @@ public class Jan_22st {
 
     public static void main(String[] args) {
         Jan_22st st = new Jan_22st();
-        System.out.println(st.groupAnagrams(new String[]{"", ""}));
+        System.out.println(st.subarraysDivByK(new int[]{4, 5, 0, -2, -3, 1}, 5));
 
+    }
+
+
+    public int subarraysDivByK(int[] nums, int k) {
+        int length = nums.length;
+        int[] pre = new int[length + 1];
+        for (int i = 0; i < length; i++) {
+            pre[i + 1] = nums[i] + pre[i];
+        }
+        int count = 0;
+        for (int i = 0; i <= length; i++) {
+            for (int j = i + 1; j <= length; j++) {
+                if ((pre[j] - pre[i]) % k == 0) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     public List<List<String>> groupAnagrams(String[] strs) {
