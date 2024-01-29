@@ -3,8 +3,6 @@ package com.zhangyoujie.jan;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.PriorityQueue;
-import java.util.stream.Collectors;
 
 /**
  * @author zhangyoujie
@@ -14,8 +12,72 @@ public class Jan_25st {
 
     public static void main(String[] args) {
         Jan_25st st = new Jan_25st();
-        int[] subarrayBeauty = st.getSubarrayBeauty(new int[]{-3, 1, 2, -3, 0, -3}, 2, 1);
-        System.out.println(subarrayBeauty);
+
+        System.out.println(st.findAnagrams("aaaaaaaaaa", "aaaaaaaaaaaaa"));
+    }
+
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        if (p.length() > s.length())
+            return ans;
+
+
+        int window = p.length();
+
+        int[] ctn = new int[26];
+        for (int i = 0; i < p.length(); i++) {
+            ctn[p.charAt(i) - 'a']++;
+        }
+
+        int[] arr = new int[26];
+        for (int i = 0; i < window; i++) {
+            arr[s.charAt(i) - 'a']++;
+        }
+        if (Arrays.equals(ctn, arr)) {
+            ans.add(0);
+        }
+
+        for (int i = 1; i < s.length() - (window - 1); i++) {
+            arr[s.charAt(i - 1) - 'a']--;
+            arr[s.charAt(i + window - 1) - 'a']++;
+            if (Arrays.equals(ctn, arr)) {
+                ans.add(i);
+            }
+        }
+        return ans;
+    }
+
+    public boolean checkInclusion(String s1, String s2) {
+        if (s2.length() < s1.length()) return false;
+        int window = s1.length();
+
+        int[] ctn1 = new int[26];
+        int[] ctn2 = new int[26];
+
+        for (int i = 0; i < window; i++) {
+            ctn1[s1.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < window; i++) {
+            ctn2[s2.charAt(i) - 'a']++;
+        }
+        boolean flag = false;
+        flag = Arrays.equals(ctn1, ctn2);
+        if (flag) {
+            return flag;
+        }
+
+        for (int i = 1; i < s2.length() - (window - 1); i++) {
+            ctn2[s2.charAt(i - 1) - 'a']--;
+            ctn2[s2.charAt(i + window - 1) - 'a']++;
+            flag = Arrays.equals(ctn1, ctn2);
+
+            if (flag) {
+                return flag;
+            }
+        }
+        return false;
+
     }
 
     public int sumIndicesWithKSetBits(List<Integer> nums, int k) {
