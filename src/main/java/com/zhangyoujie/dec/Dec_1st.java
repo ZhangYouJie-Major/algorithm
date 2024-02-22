@@ -1,6 +1,9 @@
 package com.zhangyoujie.dec;
 
 
+import com.zhangyoujie.tool.ListNode;
+import com.zhangyoujie.tool.TreeNode;
+
 import java.util.*;
 
 /**
@@ -181,22 +184,6 @@ public class Dec_1st {
 
 }
 
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode() {
-    }
-
-    ListNode(int val) {
-        this.val = val;
-    }
-
-    ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
-    }
-}
 
 
 

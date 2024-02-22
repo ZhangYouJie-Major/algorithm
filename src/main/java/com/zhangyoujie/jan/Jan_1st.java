@@ -1,6 +1,7 @@
 package com.zhangyoujie.jan;
 
 import com.zhangyoujie.tool.ListNode;
+import com.zhangyoujie.tool.TreeNode;
 
 import java.util.*;
 
@@ -103,24 +104,5 @@ public class Jan_1st {
         }
 
         return header.next;
-    }
-}
-
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
-    }
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
     }
 }

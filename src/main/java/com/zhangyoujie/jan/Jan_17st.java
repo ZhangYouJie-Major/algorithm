@@ -1,5 +1,6 @@
 package com.zhangyoujie.jan;
 
+import com.zhangyoujie.tool.TreeNode;
 import sun.security.provider.Sun;
 
 import java.util.*;

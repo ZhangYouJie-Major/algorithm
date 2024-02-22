@@ -1,5 +1,7 @@
 package com.zhangyoujie.nov;
 
+import com.zhangyoujie.tool.TreeNode;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -219,21 +221,3 @@ public class Nov_24st {
 }
 
 
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode() {
-    }
-
-    TreeNode(int val) {
-        this.val = val;
-    }
-
-    TreeNode(int val, TreeNode left, TreeNode right) {
-        this.val = val;
-        this.left = left;
-        this.right = right;
-    }
-}

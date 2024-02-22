@@ -1,5 +1,7 @@
 package com.zhangyoujie.nov;
 
+import com.zhangyoujie.tool.ListNode;
+
 import java.util.*;
 
 /**
@@ -72,24 +74,5 @@ public class Nov_23st {
 
     }
 
-
-
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-    }
 
 }

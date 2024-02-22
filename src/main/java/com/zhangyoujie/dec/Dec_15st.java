@@ -1,5 +1,7 @@
 package com.zhangyoujie.dec;
 
+import com.zhangyoujie.tool.TreeNode;
+
 import java.util.*;
 
 /**

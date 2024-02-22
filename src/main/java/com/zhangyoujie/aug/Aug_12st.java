@@ -1,5 +1,7 @@
 package com.zhangyoujie.aug;
 
+import com.zhangyoujie.tool.ListNode;
+
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -117,20 +119,5 @@ public class Aug_12st {
 
     }
 
-    public class ListNode {
-        int val;
-        ListNode next;
 
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-    }
 }

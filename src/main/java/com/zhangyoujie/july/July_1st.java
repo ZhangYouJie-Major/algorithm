@@ -1,5 +1,7 @@
 package com.zhangyoujie.july;
 
+import com.zhangyoujie.tool.ListNode;
+
 import java.util.*;
 import java.util.zip.Inflater;
 
@@ -419,30 +421,6 @@ public class July_1st {
         }
         return sum;
 
-    }
-
-//    public static long maxAlternatingSum(int[] nums) {
-//
-//
-//
-//    }
-
-
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
     }
 
 }

@@ -1,5 +1,7 @@
 package com.zhangyoujie.jan;
 
+import com.zhangyoujie.tool.ListNode;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,22 +117,4 @@ public class Jan_15st {
 
     }
 
-}
-
-
-class ListNode {
-    public int val;
-    public ListNode next;
-
-    public ListNode() {
-    }
-
-    public ListNode(int val) {
-        this.val = val;
-    }
-
-    public ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
-    }
 }

@@ -1,6 +1,8 @@
 package com.zhangyoujie.dec;
 
 
+import com.zhangyoujie.tool.ListNode;
+import com.zhangyoujie.tool.TreeNode;
 import jdk.nashorn.internal.ir.IfNode;
 
 import java.util.*;
