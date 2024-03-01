@@ -4,6 +4,7 @@ import com.zhangyoujie.tool.TreeNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,16 +16,54 @@ public class Feb_24st {
     public static void main(String[] args) {
         int[] a = new int[]{6, 2, 13, 2, 4, 9, 15, 14};
         Feb_24st st = new Feb_24st();
-        TreeNode treeNode = new TreeNode(9);
-        treeNode.left = new TreeNode(6);
-        treeNode.right = new TreeNode(14);
-        treeNode.right.left = new TreeNode(13);
-        treeNode.right.right = new TreeNode(20);
-        treeNode.right.left.left = new TreeNode(12);
+        TreeNode treeNode = new TreeNode(1);
+        treeNode.left = new TreeNode(2);
+        treeNode.right = new TreeNode(3);
+        treeNode.left.right = new TreeNode(4);
+        treeNode.right.right = new TreeNode(5);
+//        treeNode.right.left.left = new TreeNode(12);
 
 
-        List<List<Integer>> lists = st.closestNodes(treeNode, Arrays.asList(19, 10, 9, 17, 19, 6, 10, 19, 13, 6));
-        System.out.println(lists);
+        System.out.println(st.isCousins(treeNode, 4, 3));
+
+
+    }
+
+    public boolean isCousins(TreeNode root, int x, int y) {
+
+        List<TreeNode> list = Collections.singletonList(root);
+
+        while (!list.isEmpty()) {
+            List<TreeNode> temp = list;
+            list = new ArrayList<>();
+            for (TreeNode treeNode : temp) {
+                if (null != treeNode.left) list.add(treeNode.left);
+                if (null != treeNode.right) list.add(treeNode.right);
+            }
+            if (temp.size() < 2) continue;
+
+            List<Integer> a = new ArrayList<>();
+            for (TreeNode treeNode : temp) {
+                a.add(treeNode.val);
+            }
+
+
+            int index1 = a.indexOf(x);
+            int index2 = a.indexOf(y);
+            int min = Math.min(index1, index2);
+            int max = Math.max(index1, index2);
+            if (index2 != -1 && index1 != -1) {
+                if (min % 2 == 0 && min + 1 == max) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+
+        }
+        return false;
+
 
     }
 
